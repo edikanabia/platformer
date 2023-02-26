@@ -5,25 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    int score = 0;
+    public static int candies = 0;
     bool canProceed = false;
-    bool playerIsDead = false;
-    int spawnerNumber = 0;
+    public bool playerIsDead = false;
+    public int spawnerNumber = 0;
 
-
+    public GameObject[] spawners;
+    public GameObject player;
+    public CameraController cameraControl;
 
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        
+        //DontDestroyOnLoad(gameObject);
+        SpawnPlayer();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            SpawnPlayer();
+            
+        }
+
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            cameraControl.TargetPlayer();
+        }
     }
 
-
+    public void SpawnPlayer()
+    {
+        Instantiate(player, spawners[spawnerNumber].transform.position, Quaternion.identity);
+        
+    }
 }

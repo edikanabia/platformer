@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Death Plane
   - Platform Limit
+  - Collectible
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

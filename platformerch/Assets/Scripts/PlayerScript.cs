@@ -21,16 +21,20 @@ public class PlayerScript : MonoBehaviour
     public bool floating = false;
     [SerializeField]bool grounded;
 
+    //external references
+    public GameManager gameManager;
+
+    //component fields
+    Animator myAnimator;
     Rigidbody2D myBody;
 
-    //animation fields
-    Animator myAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
         myBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -38,7 +42,10 @@ public class PlayerScript : MonoBehaviour
     {
         //left and right movement
         horizontalMove = Input.GetAxis("Horizontal");
-
+        if(gameManager == null)
+        {
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
 
         //jump check
         if (Input.GetButtonDown("Jump")&& grounded)
@@ -105,5 +112,24 @@ public class PlayerScript : MonoBehaviour
             grounded = false;
         }
         myBody.velocity = new Vector3(moveSpeed, myBody.velocity.y, 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Collectible"))
+        {
+            Destroy(collision.gameObject);
+        }
+        if (collision.CompareTag("Death Plane"))
+        {
+            //gameManager.SpawnPlayer();
+            Destroy(gameObject); 
+        }
+        if (collision.CompareTag("Checkpoint"))
+        {
+            gameManager.spawnerNumber++;
+            //Debug.Log("erm?");
+            collision.enabled = false;
+        }
     }
 }

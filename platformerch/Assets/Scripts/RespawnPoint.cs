@@ -9,7 +9,7 @@ public class RespawnPoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        enabled = false;
     }
 
     // Update is called once per frame
@@ -18,13 +18,5 @@ public class RespawnPoint : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
 
-    public void SpawnPlayer()
-    {
-        Instantiate(player, transform.position, Quaternion.identity);
-    }
 }
