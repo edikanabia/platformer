@@ -50,8 +50,7 @@ public class PlayerScript : MonoBehaviour
         //jump check
         if (Input.GetButtonDown("Jump")&& grounded)
         {
-            jump = true;
-            
+            jump = true;  
         }
 
         if (Input.GetButton("Jump"))
@@ -63,10 +62,13 @@ public class PlayerScript : MonoBehaviour
             floating = false;
         }
 
+       
+
         //animator conditions
         if (horizontalMove > 0.2f || horizontalMove < -0.2f)
         {
             myAnimator.SetBool("walking", true);
+            
         }
         else
         {
@@ -90,11 +92,11 @@ public class PlayerScript : MonoBehaviour
         {
             myBody.gravityScale = gravityScale;
         }
-        else if(myBody.velocity.y < 0 && floating)
+        else if(myBody.velocity.y <= 0 && floating)
         {
             myBody.gravityScale = floatingScale;
         }
-        else if (myBody.velocity.y < 0 && !floating)
+        else if (myBody.velocity.y <= 0 && !floating)
         {
             myBody.gravityScale = gravityFall;
         }
@@ -107,6 +109,7 @@ public class PlayerScript : MonoBehaviour
         {
             grounded = true;
         }
+
         else
         {
             grounded = false;
@@ -119,6 +122,7 @@ public class PlayerScript : MonoBehaviour
         if (collision.CompareTag("Collectible"))
         {
             Destroy(collision.gameObject);
+            gameManager.CandyGet();
         }
         if (collision.CompareTag("Death Plane"))
         {
@@ -127,8 +131,13 @@ public class PlayerScript : MonoBehaviour
         }
         if (collision.CompareTag("Checkpoint"))
         {
-            gameManager.spawnerNumber++;
-            //Debug.Log("erm?");
+            if (gameManager.spawnerNumber < gameManager.spawners.Length)
+            {
+                gameManager.spawnerNumber++;
+
+            }
+            
+            Debug.Log("erm?");
             collision.enabled = false;
         }
     }

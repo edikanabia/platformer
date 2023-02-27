@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static int candies = 0;
+    static int nextScene = 0;
     bool canProceed = false;
     public bool playerIsDead = false;
     public int spawnerNumber = 0;
@@ -39,6 +40,10 @@ public class GameManager : MonoBehaviour
     public void SpawnPlayer()
     {
         Instantiate(player, spawners[spawnerNumber].transform.position, Quaternion.identity);
-        
+    }
+
+    public void CandyGet()
+    {
+        candies++;
     }
 }
